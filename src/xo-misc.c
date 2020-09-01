@@ -1724,15 +1724,18 @@ void recolor_temp_text(int color_no, guint color_rgba)
 
 void process_color_activate(GtkMenuItem *menuitem, int color_no, guint color_rgba)
 {
-  if (GTK_OBJECT_TYPE(menuitem) == GTK_TYPE_RADIO_MENU_ITEM) {
-    if (!gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM (menuitem)))
-      return;
-  } 
-  else if (GTK_OBJECT_TYPE(menuitem) == GTK_TYPE_RADIO_TOOL_BUTTON) {
-    if (!gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON (menuitem)))
-      return;
+  if (menuitem != NULL)
+  {
+    if (GTK_OBJECT_TYPE(menuitem) == GTK_TYPE_RADIO_MENU_ITEM) {
+        if (!gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM (menuitem)))
+        return;
+    } 
+    else if (GTK_OBJECT_TYPE(menuitem) == GTK_TYPE_RADIO_TOOL_BUTTON) {
+        if (!gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON (menuitem)))
+        return;
+    }
   }
-
+  
   if (ui.cur_mapping != 0 && !ui.button_switch_mapping) return; // not user-generated
 
   if (ui.cur_item_type == ITEM_TEXT)

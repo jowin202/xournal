@@ -42,6 +42,88 @@ struct UndoItem *undo, *redo; // the undo and redo stacks
 
 double DEFAULT_ZOOM;
 
+
+
+
+//telnet server begin
+struct ConnData {
+  GSocketConnection *connection;
+  char message[1024];
+};
+
+void message_ready (GObject * source_object,
+    GAsyncResult *res,
+    gpointer user_data)
+{
+  GInputStream *istream = G_INPUT_STREAM (source_object);
+  GError *error = NULL;
+  struct ConnData *data = user_data;
+  int count;
+
+  count = g_input_stream_read_finish (istream,
+      res,
+      &error);
+
+  if (count == -1) {
+    g_error ("Error when receiving message");
+    if (error != NULL) {
+      g_error ("%s", error->message);
+      g_clear_error (&error);
+    }
+  }
+  g_message ("Message was: \"%s\"\n", data->message);
+  if (g_str_has_prefix(data->message, "col_black"))
+      on_colorBlack_activate(NULL, NULL);
+  else if (g_str_has_prefix(data->message, "col_blue")) 
+    on_colorBlue_activate(NULL, NULL);
+  else if (g_str_has_prefix(data->message, "col_red")) 
+    on_colorRed_activate(NULL, NULL);
+  else if (g_str_has_prefix(data->message, "col_green")) 
+    on_colorGreen_activate(NULL, NULL);
+  else if (g_str_has_prefix(data->message, "col_gray")) 
+    on_colorGray_activate(NULL, NULL);
+  else if (g_str_has_prefix(data->message, "col_lightblue")) 
+    on_colorLightBlue_activate(NULL, NULL);
+  else if (g_str_has_prefix(data->message, "col_lightgreen")) 
+    on_colorLightGreen_activate(NULL, NULL);
+  else if (g_str_has_prefix(data->message, "col_magenta")) 
+    on_colorMagenta_activate(NULL, NULL);
+  else if (g_str_has_prefix(data->message, "col_orange")) 
+    on_colorOrange_activate(NULL, NULL);  
+  else if (g_str_has_prefix(data->message, "col_yellow")) 
+    on_colorYellow_activate(NULL, NULL);
+  else if (g_str_has_prefix(data->message, "col_white")) 
+    on_colorWhite_activate(NULL, NULL);
+  
+  g_object_unref (G_SOCKET_CONNECTION (data->connection));
+  g_free (data);
+}
+
+static gboolean
+incoming_callback (GSocketService *service,
+    GSocketConnection * connection,
+    GObject * source_object,
+    gpointer user_data)
+{
+  g_message ("Received Connection from client!\n");
+  GInputStream *istream = g_io_stream_get_input_stream (G_IO_STREAM (connection));
+  struct ConnData *data = g_new (struct ConnData, 1);
+
+  data->connection = g_object_ref (connection);
+
+  g_input_stream_read_async (istream,
+      data->message,
+      sizeof (data->message),
+      G_PRIORITY_DEFAULT,
+      NULL,
+      message_ready,
+      data);
+  return FALSE;
+}
+//telnet server ende
+
+
+
 void init_stuff (int argc, char *argv[])
 {
   GtkWidget *w;
@@ -361,6 +443,31 @@ main (int argc, char *argv[])
   g_free(path1);
   g_free(path2);
   add_pixmap_directory (PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
+  
+  
+  
+  
+  
+  //telnet server begin
+  GSocketService *service;
+  GError *error = NULL;
+  gboolean ret;
+
+  service = g_socket_service_new ();
+  ret = g_socket_listener_add_inet_port (G_SOCKET_LISTENER (service), 2345, NULL, &error);
+
+  if (ret && error != NULL)
+  {
+    g_error ("%s", error->message);
+    g_clear_error (&error);
+    return 1;
+  }
+
+  g_signal_connect (service, "incoming", G_CALLBACK (incoming_callback), NULL);
+  g_socket_service_start (service);
+  //telnet server end
+
+  
 
   /*
    * The following code was added by Glade to create one of each component
