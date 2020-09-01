@@ -94,6 +94,16 @@ void message_ready (GObject * source_object,
     on_colorYellow_activate(NULL, NULL);
   else if (g_str_has_prefix(data->message, "col_white")) 
     on_colorWhite_activate(NULL, NULL);
+  else if (g_str_has_prefix(data->message, "pen_veryfine"))
+    process_thickness_activate(NULL, TOOL_PEN, THICKNESS_VERYFINE);
+  else if (g_str_has_prefix(data->message, "pen_fine"))
+    process_thickness_activate(NULL, TOOL_PEN, THICKNESS_FINE);
+  else if (g_str_has_prefix(data->message, "pen_medium"))
+    process_thickness_activate(NULL, TOOL_PEN, THICKNESS_MEDIUM);
+  else if (g_str_has_prefix(data->message, "pen_thick"))
+    process_thickness_activate(NULL, TOOL_PEN, THICKNESS_THICK);
+  else if (g_str_has_prefix(data->message, "pen_verythick"))
+    process_thickness_activate(NULL, TOOL_PEN, THICKNESS_VERYTHICK);
   
   g_object_unref (G_SOCKET_CONNECTION (data->connection));
   g_free (data);

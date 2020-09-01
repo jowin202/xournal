@@ -1768,17 +1768,20 @@ void process_thickness_activate(GtkMenuItem *menuitem, int tool, int val)
 {
   int which_mapping;
   
-  if (GTK_OBJECT_TYPE(menuitem) == GTK_TYPE_RADIO_MENU_ITEM) {
-    if (!gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM (menuitem)))
-      return;
-  } else {
-    if (!gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON (menuitem)))
-      return;
+  if (menuitem != NULL)
+  {
+    if (GTK_OBJECT_TYPE(menuitem) == GTK_TYPE_RADIO_MENU_ITEM) {
+        if (!gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM (menuitem)))
+        return;
+    } else {
+        if (!gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON (menuitem)))
+        return;
+    }
   }
-
+  
   if (ui.cur_mapping != 0 && !ui.button_switch_mapping) return; // not user-generated
 
-  if (ui.selection != NULL && GTK_OBJECT_TYPE(menuitem) != GTK_TYPE_RADIO_MENU_ITEM) {
+  if (ui.selection != NULL){ // && GTK_OBJECT_TYPE(menuitem) != GTK_TYPE_RADIO_MENU_ITEM) {
     rethicken_selection(val);
     update_thickness_buttons();
   }
