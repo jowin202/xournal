@@ -72,6 +72,7 @@ void message_ready (GObject * source_object,
     }
   }
   g_message ("Message was: \"%s\"\n", data->message);
+  //color
   if (g_str_has_prefix(data->message, "col_black"))
       on_colorBlack_activate(NULL, NULL);
   else if (g_str_has_prefix(data->message, "col_blue")) 
@@ -94,6 +95,7 @@ void message_ready (GObject * source_object,
     on_colorYellow_activate(NULL, NULL);
   else if (g_str_has_prefix(data->message, "col_white")) 
     on_colorWhite_activate(NULL, NULL);
+  //thickness
   else if (g_str_has_prefix(data->message, "pen_veryfine"))
     process_thickness_activate(NULL, TOOL_PEN, THICKNESS_VERYFINE);
   else if (g_str_has_prefix(data->message, "pen_fine"))
@@ -104,6 +106,17 @@ void message_ready (GObject * source_object,
     process_thickness_activate(NULL, TOOL_PEN, THICKNESS_THICK);
   else if (g_str_has_prefix(data->message, "pen_verythick"))
     process_thickness_activate(NULL, TOOL_PEN, THICKNESS_VERYTHICK);
+  //selection
+  else if (g_str_has_prefix(data->message, "select_rect"))
+    on_toolsSelectRectangle_activate(NULL, NULL);
+  else if (g_str_has_prefix(data->message, "select_pen"))
+    on_toolsDefaultPen_activate(NULL, NULL);
+  else if (g_str_has_prefix(data->message, "select_eraser"))
+    on_toolsDefaultEraser_activate(NULL, NULL);
+  else if (g_str_has_prefix(data->message, "select_highlighter"))
+    on_toolsDefaultHighlighter_activate(NULL, NULL);
+  else if (g_str_has_prefix(data->message, "select_vspace"))
+    on_toolsVerticalSpace_activate(NULL, NULL);
   
   g_object_unref (G_SOCKET_CONNECTION (data->connection));
   g_free (data);

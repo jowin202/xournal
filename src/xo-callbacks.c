@@ -1835,12 +1835,15 @@ void
 on_toolsSelectRectangle_activate       (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-  if (GTK_OBJECT_TYPE(menuitem) == GTK_TYPE_RADIO_MENU_ITEM) {
-    if (!gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM (menuitem)))
-      return;
-  } else {
-    if (!gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON (menuitem)))
-      return;
+  if (menuitem != NULL)
+  {
+    if (GTK_OBJECT_TYPE(menuitem) == GTK_TYPE_RADIO_MENU_ITEM) {
+        if (!gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM (menuitem)))
+        return;
+    } else {
+        if (!gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON (menuitem)))
+        return;
+    }
   }
   
   if (ui.cur_mapping != 0 && !ui.button_switch_mapping) return; // not user-generated
@@ -1861,12 +1864,15 @@ void
 on_toolsVerticalSpace_activate         (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-  if (GTK_OBJECT_TYPE(menuitem) == GTK_TYPE_RADIO_MENU_ITEM) {
-    if (!gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM (menuitem)))
-      return;
-  } else {
-    if (!gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON (menuitem)))
-      return;
+  if (menuitem != NULL)
+  {
+    if (GTK_OBJECT_TYPE(menuitem) == GTK_TYPE_RADIO_MENU_ITEM) {
+        if (!gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM (menuitem)))
+        return;
+    } else {
+        if (!gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON (menuitem)))
+        return;
+    }
   }
   
   if (ui.cur_mapping != 0 && !ui.button_switch_mapping) return; // not user-generated
