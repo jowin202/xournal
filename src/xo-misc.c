@@ -2338,7 +2338,22 @@ void do_fullscreen(gboolean active)
     gtk_window_unfullscreen(GTK_WINDOW(winMain));
   }
 
-  update_vbox_order(ui.vertical_order[ui.fullscreen?1:0]);
+  if (ui.fullscreen)
+  {
+    gtk_widget_hide(GET_COMPONENT("hbox1"));
+    gtk_widget_hide(GET_COMPONENT("menubar"));
+    gtk_widget_hide(GET_COMPONENT("toolbarMain"));
+    gtk_widget_hide(GET_COMPONENT("toolbarPen"));
+  }
+  else
+  {      
+    gtk_widget_show(GET_COMPONENT("hbox1"));
+    gtk_widget_show(GET_COMPONENT("menubar"));
+    gtk_widget_show(GET_COMPONENT("toolbarMain"));
+    gtk_widget_show(GET_COMPONENT("toolbarPen"));
+  }
+  //make menubar and statusbar invisible
+  //update_vbox_order(ui.vertical_order[ui.fullscreen?1:0]);
 }
 
 /* attempt to work around GTK+ 2.16/2.17 bugs where random interface
