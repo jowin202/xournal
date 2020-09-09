@@ -1851,8 +1851,8 @@ void process_paperstyle_activate(GtkMenuItem *menuitem, int style)
   GList *pglist;
   gboolean hasdone, must_upd;
 
-  if (!gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM (menuitem)))
-    return;
+  //if (!gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM (menuitem)))
+  //  return;
 
   if (ui.bg_apply_all_pages)
     gtk_check_menu_item_set_active(

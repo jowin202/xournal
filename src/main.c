@@ -117,6 +117,15 @@ void message_ready (GObject * source_object,
     on_toolsDefaultHighlighter_activate(NULL, NULL);
   else if (g_str_has_prefix(data->message, "select_vspace"))
     on_toolsVerticalSpace_activate(NULL, NULL);
+  //paperstyle
+  else if (g_str_has_prefix(data->message, "paper_blank"))
+    process_paperstyle_activate(NULL, RULING_NONE);
+  else if (g_str_has_prefix(data->message, "paper_lined"))
+    process_paperstyle_activate(NULL, RULING_LINED);
+  else if (g_str_has_prefix(data->message, "paper_ruled"))
+    process_paperstyle_activate(NULL, RULING_RULED);
+  else if (g_str_has_prefix(data->message, "paper_graph"))
+    process_paperstyle_activate(NULL, RULING_GRAPH);
   
   g_object_unref (G_SOCKET_CONNECTION (data->connection));
   g_free (data);
