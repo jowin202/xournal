@@ -73,28 +73,19 @@ void message_ready (GObject * source_object,
   }
   g_message ("Message was: \"%s\"\n", data->message);
   //color
-  if (g_str_has_prefix(data->message, "col_black"))
-      on_colorBlack_activate(NULL, NULL);
-  else if (g_str_has_prefix(data->message, "col_blue")) 
-    on_colorBlue_activate(NULL, NULL);
-  else if (g_str_has_prefix(data->message, "col_red")) 
-    on_colorRed_activate(NULL, NULL);
-  else if (g_str_has_prefix(data->message, "col_green")) 
-    on_colorGreen_activate(NULL, NULL);
-  else if (g_str_has_prefix(data->message, "col_gray")) 
-    on_colorGray_activate(NULL, NULL);
-  else if (g_str_has_prefix(data->message, "col_lightblue")) 
-    on_colorLightBlue_activate(NULL, NULL);
-  else if (g_str_has_prefix(data->message, "col_lightgreen")) 
-    on_colorLightGreen_activate(NULL, NULL);
-  else if (g_str_has_prefix(data->message, "col_magenta")) 
-    on_colorMagenta_activate(NULL, NULL);
-  else if (g_str_has_prefix(data->message, "col_orange")) 
-    on_colorOrange_activate(NULL, NULL);  
-  else if (g_str_has_prefix(data->message, "col_yellow")) 
-    on_colorYellow_activate(NULL, NULL);
-  else if (g_str_has_prefix(data->message, "col_white")) 
-    on_colorWhite_activate(NULL, NULL);
+  if (g_str_has_prefix(data->message, "hexcol_"))
+  {
+      guint color = 0;
+      guint r,g,b;
+      sscanf(data->message + 7, "%02x%02x%02x", &r, &g, &b);
+      guint res = (r & 0xFF) << 8;
+      res |= (g & 0xFF);
+      res <<= 8;
+      res |= (b & 0xFF);
+      res <<= 8;
+      res |= 0xFF;
+      process_color_activate(NULL, -1, res);
+  }
   //thickness
   else if (g_str_has_prefix(data->message, "pen_veryfine"))
     process_thickness_activate(NULL, TOOL_PEN, THICKNESS_VERYFINE);
