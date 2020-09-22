@@ -108,6 +108,8 @@ void message_ready (GObject * source_object,
     on_toolsDefaultHighlighter_activate(NULL, NULL);
   else if (g_str_has_prefix(data->message, "select_vspace"))
     on_toolsVerticalSpace_activate(NULL, NULL);
+  else if (g_str_has_prefix(data->message, "select_move"))
+    on_toolsHand_activate(NULL, NULL);
   //paperstyle
   else if (g_str_has_prefix(data->message, "paper_blank"))
     process_paperstyle_activate(NULL, RULING_NONE);

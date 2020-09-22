@@ -3635,10 +3635,10 @@ void
 on_toolsHand_activate                  (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-  if (GTK_OBJECT_TYPE(menuitem) == GTK_TYPE_RADIO_MENU_ITEM) {
+  if (menuitem != NULL && GTK_OBJECT_TYPE(menuitem) == GTK_TYPE_RADIO_MENU_ITEM) {
     if (!gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM (menuitem)))
       return;
-  } else {
+  } else if (menuitem != NULL) {
     if (!gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON (menuitem)))
       return;
   }
