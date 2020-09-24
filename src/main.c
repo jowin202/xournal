@@ -86,6 +86,12 @@ void message_ready (GObject * source_object,
       res |= 0xFF;
       process_color_activate(NULL, -1, res);
   }
+  else if (g_str_has_prefix(data->message, "toggle_sensitivity"))
+  {
+      GtkWidget *option_sensitivity = GET_COMPONENT("optionsPressureSensitive");
+      gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM (option_sensitivity), !gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM (option_sensitivity)));
+      on_optionsPressureSensitive_activate((GtkMenuItem*)option_sensitivity, NULL);
+  }
   //thickness
   else if (g_str_has_prefix(data->message, "pen_veryfine"))
     process_thickness_activate(NULL, TOOL_PEN, THICKNESS_VERYFINE);
