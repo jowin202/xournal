@@ -92,6 +92,12 @@ void message_ready (GObject * source_object,
       gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM (option_sensitivity), !gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM (option_sensitivity)));
       on_optionsPressureSensitive_activate((GtkMenuItem*)option_sensitivity, NULL);
   }
+  else if (g_str_has_prefix(data->message, "newpage_before"))
+    on_journalNewPageBefore_activate(NULL, NULL);
+  else if (g_str_has_prefix(data->message, "newpage_after"))
+    on_journalNewPageAfter_activate(NULL, NULL);
+  else if (g_str_has_prefix(data->message, "newpage_end"))
+    on_journalNewPageEnd_activate(NULL, NULL);
   //thickness
   else if (g_str_has_prefix(data->message, "pen_veryfine"))
     process_thickness_activate(NULL, TOOL_PEN, THICKNESS_VERYFINE);
